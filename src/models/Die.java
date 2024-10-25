@@ -17,13 +17,11 @@ public class Die {
     public Die() {
     }
 
+    public void setEyes(int eyes) {
+        this.eyes = eyes;
+    }
+
     public void roll() {
-        int[] dices = new int[5];
-        dices[0] = (int) (Math.random() * 6 + 1);
-        dices[1] = (int) (Math.random() * 6 + 1);
-        dices[2] = (int) (Math.random() * 6 + 1);
-        dices[3] = (int) (Math.random() * 6 + 1);
-        dices[4] = (int) (Math.random() * 6 + 1);
-        return dices;
+         setEyes((int) (Math.random() * 6 + 1));
     }
 }
