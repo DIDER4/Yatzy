@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Die {
     private int eyes = 0;
-    private final Random random = new Random();
+    private Random random = new Random();
 
     /**
      * Creates a new Die object, with face set to eyes. Used for test purpose
@@ -15,13 +15,23 @@ public class Die {
     }
 
     public Die() {
+        setEyes(0);
+        setRandom(new Random());
+    }
+
+    public void roll() {
+         this.eyes = random.nextInt(6) + 1;
+    }
+
+    public int getEyes() {
+        return eyes;
     }
 
     public void setEyes(int eyes) {
         this.eyes = eyes;
     }
 
-    public void roll() {
-         setEyes((int) (Math.random() * 6 + 1));
+    public void setRandom(Random random) {
+        this.random = random;
     }
 }
