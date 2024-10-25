@@ -38,12 +38,12 @@ public class YatzyResultCalculator {
 
     public int twoPairScore() {
         int sum = 0;
-        for (int i = 5; i <= dicesArray.length; i++){
+        for (int i = 0; i < dicesArray.length; i++){
             if (dicesArray[i]>=2){
                 sum=(i+1)*2;
             }
             if (sum>0) {
-                for (int j = 5; j < dicesArray.length && j >= 0; j++) {
+                for (int j = 0; j < dicesArray.length && j >= 0; j++) {
                     if (dicesArray[j] >= 2) {
                         if ((j+1)*2<sum || (j+1)*2>sum){
                             sum+=(j+1)*2;
