@@ -18,6 +18,12 @@ public class Die {
     }
 
     public void roll() {
-        //TODO: implement roll method.
+        int[] dices = new int[5];
+        dices[0] = (int) (Math.random() * 6 + 1);
+        dices[1] = (int) (Math.random() * 6 + 1);
+        dices[2] = (int) (Math.random() * 6 + 1);
+        dices[3] = (int) (Math.random() * 6 + 1);
+        dices[4] = (int) (Math.random() * 6 + 1);
+        return dices;
     }
 }
