@@ -11,7 +11,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
-import javafx.geometry.Orientation;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -32,8 +31,8 @@ public class YatzyGui extends Application {
     private final ArrayList<Label> diceFaceLabelList = new ArrayList<>();
 
     // Integrate
-    private final ToggleGroup holdDice = new ToggleGroup();
     private final ArrayList<RadioButton> radioButtonList = new ArrayList<>();
+    private static final boolean[] isHeld = new boolean[5];
 
     private int counter;
     private final Label numberOfRolls = new Label("0");
@@ -49,13 +48,14 @@ public class YatzyGui extends Application {
         primaryStage.setTitle("Yatzy");
         GridPane primaryPane = new GridPane();
         this.innerContents(primaryPane);
-        Scene firstScene = new Scene(primaryPane,400,800);
+        Scene firstScene = new Scene(primaryPane, 400, 800);
         primaryStage.setScene(firstScene);
         primaryStage.show();
         primaryPane.setPadding(new Insets(10));
         primaryPane.setHgap(10);
         primaryPane.setVgap(10);
     }
+
     private void innerContents(GridPane pane) {
         // upper GUI elements
         GridPane diceBox = new GridPane();
@@ -75,10 +75,15 @@ public class YatzyGui extends Application {
                     RadioButton radioButton = new RadioButton("Hold");
                     radioButtonList.add(radioButton);
                     diceBox.add(radioButton, columnn, row);
+                    radioButton.setOnAction(e -> {
+                        int selectedDice = radioButtonList.indexOf(radioButton);
+                        isHeld[selectedDice] = radioButton.isSelected();
+                    });
                     // radioButton.setOnAction(e -> ); Need to make a method for holding a dice from changing
                 }
+
             }
-            if(row == 2) {
+            if (row == 2) {
                 Label numberOfRollsLabel = new Label("Number of throws:");
                 HBox hbox = new HBox(numberOfRollsLabel, numberOfRolls, rollDiceButton);
                 hbox.setSpacing(10);
@@ -89,7 +94,7 @@ public class YatzyGui extends Application {
 
         // User interactions
         rollDiceButton.setOnMouseClicked(e -> {
-            if(counter < 3){
+            if (counter < 3) {
                 Die[] raffleCup = throwRaffleCup();
                 addDiceToLabel(raffleCup);
                 updateNumberOfRolls();
@@ -110,7 +115,7 @@ public class YatzyGui extends Application {
                 "Fuldt hus", "Chance", "Yatzy", "Total"
         };
 
-        for(int row = 0; row < labels.length; row++){
+        for (int row = 0; row < labels.length; row++) {
             Label label = new Label(labels[row]);
             TextField textField = new TextField();
             tableLabelList.add(label);
@@ -118,27 +123,27 @@ public class YatzyGui extends Application {
             scoreBoardTable.add(label, 0, row);
             scoreBoardTable.add(textField, 1, row);
         }
-        pane.add(scoreBoardTable,0,1);
+        pane.add(scoreBoardTable, 0, 1);
     }
 
-    private Die[] throwRaffleCup(){
+    private Die[] throwRaffleCup() {
         this.raffleCup.throwDice();
         return raffleCup.getDice();
     }
 
-    private void addDiceToLabel(Die[] raffleCup){
-        for(int index = 0; index < raffleCup.length; index++){
+    private void addDiceToLabel(Die[] raffleCup) {
+        for (int index = 0; index < raffleCup.length; index++) {
             String currentDiceEyes = toString(raffleCup[index].getEyes());
             diceFaceLabelList.get(index).setText(currentDiceEyes);
         }
     }
 
-    private void updateNumberOfRolls(){
+    private void updateNumberOfRolls() {
         this.counter++;
         numberOfRolls.setText(toString(counter));
     }
 
-    private void checkPotentialPoints(Die[] raffleCup){
+    private void checkPotentialPoints(Die[] raffleCup) {
         YatzyResultCalculator currentThrow = new YatzyResultCalculator(raffleCup);
 
         resultsList.add(currentThrow.upperSectionSum());
@@ -155,7 +160,7 @@ public class YatzyGui extends Application {
         resultsList.add(totalScore());
 
         for (int index = 0; index < textFieldList.size(); index++) {
-            if(index < 6){
+            if (index < 6) {
                 int currentDice = index + 1;
                 String upperScore = toString(currentThrow.upperSectionScore(currentDice));
                 textFieldList.get(index).setText(upperScore);
@@ -166,11 +171,20 @@ public class YatzyGui extends Application {
         }
     }
 
-    private int bonusScore(){
-        // iterate thorugh first label index 0-5
-        // if sum of each diceface is 63
-        // return 50 points
-        return 0;
+    private int bonusScore() {
+        int sum = 0;
+
+        for (int i = 0; i < 5; i++) {
+            Label diceLabel = diceFaceLabelList.get(i);
+            int diceValue = Integer.parseInt(diceLabel.getText());
+            sum += diceValue;
+        }
+
+        if (sum == 63) {
+            return 50;
+        } else {
+            return 0;
+        }
     }
 
     private int totalScore(){
@@ -179,5 +193,16 @@ public class YatzyGui extends Application {
 
     private String toString(int eyes) {
         return Integer.toString(eyes);
+    }
+
+    public static boolean[] getIsHeld() {
+        return isHeld;
+    }
+
+    private void textFieldAction (TextField textField, int index){
+        int points = Integer.parseInt(textField.getText());
+        resultsList.add(index,points);
+        textField.setEditable(false);
+        textField.setStyle("-fx-background-color: lightgray;");
     }
 }

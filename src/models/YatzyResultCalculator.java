@@ -144,8 +144,8 @@ public class YatzyResultCalculator {
 
     public int upperSectionSum(){
         int sum = 0;
-        for(int index = 0; index < diceFaceArray.length; index++){
-            sum += ((index + 1) * diceFaceArray[index]);
+        for(int index = 0; index < dicesArray.length; index++){
+            sum += ((index + 1) * dicesArray[index]);
         }
         return sum;
     }

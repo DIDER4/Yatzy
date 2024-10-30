@@ -1,5 +1,7 @@
 package models;
 
+import gui.YatzyGui;
+
 public class RaffleCup {
     private Die[] dice = new Die[5];
 
@@ -10,8 +12,11 @@ public class RaffleCup {
     }
 
     public void throwDice() {
-        for(Die die : dice){
-            die.roll();
+        for(int index = 0; index < dice.length; index++){
+            boolean[] isHeldArray = YatzyGui.getIsHeld();
+            if(!isHeldArray[index]){
+                dice[index].roll();
+            }
         }
     }
 
