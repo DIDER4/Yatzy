@@ -79,7 +79,6 @@ public class YatzyGui extends Application {
                         int selectedDice = radioButtonList.indexOf(radioButton);
                         isHeld[selectedDice] = radioButton.isSelected();
                     });
-                    // radioButton.setOnAction(e -> ); Need to make a method for holding a dice from changing
                 }
 
             }
@@ -99,9 +98,6 @@ public class YatzyGui extends Application {
                 addDiceToLabel(raffleCup);
                 updateNumberOfRolls();
                 checkPotentialPoints(raffleCup);
-                if (counter == 3){
-                    counter=0;
-                }
             }
 
         });
@@ -168,10 +164,10 @@ public class YatzyGui extends Application {
         for (int index = 0; index < textFieldList.size(); index++) {
             if (index < 6) {
                 int currentDice = index + 1;
-                String upperScore = toString(currentThrow.upperSectionScore(currentDice));
+                String upperScore = String.valueOf(currentThrow.upperSectionScore(currentDice));
                 textFieldList.get(index).setText(upperScore);
             } else {
-                String text = toString(resultsList.get(index - 6)); // Defaults the index to 0 from 6
+                String text = String.valueOf(resultsList.get(index - 6)); // Defaults the index to 0 from 6
                 textFieldList.get(index).setText(text);
             }
         }
@@ -194,7 +190,11 @@ public class YatzyGui extends Application {
     }
 
     private int totalScore(){
-        return 0;
+        int sum = 0;
+        for(int index = 0; index < resultsList.size(); index++){
+            sum += resultsList.get(index);
+        }
+        return sum;
     }
 
     private String toString(int eyes) {
