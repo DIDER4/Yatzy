@@ -44,6 +44,7 @@ public class YatzyGui extends Application {
     private final ArrayList<Integer> resultsList = new ArrayList<>();
 
     private final Stage threeCountStage = new Stage();
+    private int accumulatedScore = 0;
 
     @Override
     public void start(Stage primaryStage) {
@@ -81,7 +82,6 @@ public class YatzyGui extends Application {
                         int selectedDice = radioButtonList.indexOf(radioButton);
                         isHeld[selectedDice] = radioButton.isSelected();
                     });
-                    // radioButton.setOnAction(e -> ); Need to make a method for holding a dice from changing
                 }
 
             }
@@ -101,19 +101,7 @@ public class YatzyGui extends Application {
                 addDiceToLabel(raffleCup);
                 updateNumberOfRolls();
                 checkPotentialPoints(raffleCup);
-                if (counter == 3){
-                    threeCountStage.setTitle("Slå igen");
-                    GridPane pane2 = new GridPane();
-                    threeCountContent(pane2);
-                    Scene scene = new Scene(pane2);
-                    threeCountStage.setScene(scene);
-                    threeCountStage.showAndWait();
 
-
-
-
-                    counter=0;
-                }
             }
 
         });
@@ -164,6 +152,8 @@ public class YatzyGui extends Application {
     private void checkPotentialPoints(Die[] raffleCup) {
         YatzyResultCalculator currentThrow = new YatzyResultCalculator(raffleCup);
 
+        resultsList.clear();
+
         resultsList.add(currentThrow.upperSectionSum());
         resultsList.add(bonusScore());
         resultsList.add(currentThrow.onePairScore());
@@ -178,13 +168,15 @@ public class YatzyGui extends Application {
         resultsList.add(totalScore());
 
         for (int index = 0; index < textFieldList.size(); index++) {
-            if (index < 6) {
-                int currentDice = index + 1;
-                String upperScore = toString(currentThrow.upperSectionScore(currentDice));
-                textFieldList.get(index).setText(upperScore);
-            } else {
-                String text = toString(resultsList.get(index - 6)); // Defaults the index to 0 from 6
-                textFieldList.get(index).setText(text);
+            if (textFieldList.get(index).isEditable()){
+                if (index < 6) {
+                    int currentDice = index + 1;
+                    String upperScore = toString(currentThrow.upperSectionScore(currentDice));
+                    textFieldList.get(index).setText(upperScore);
+                } else {
+                    String text = toString(resultsList.get(index - 6)); // Defaults the index to 0 from 6
+                    textFieldList.get(index).setText(text);
+                }
             }
         }
     }
@@ -207,11 +199,12 @@ public class YatzyGui extends Application {
 
     private int totalScore(){
 
-        int sum = 0;
-        for(int index = 0; index < resultsList.size(); index++){
-            sum += resultsList.get(index);
+        int roundscore = 0;
+        for (int i = 7; i<=16; i++) {
+            roundscore += resultsList.get(i - 6);
         }
-        return sum;
+        accumulatedScore += roundscore;
+        return accumulatedScore;
     }
 
     private String toString(int eyes) {
@@ -227,6 +220,21 @@ public class YatzyGui extends Application {
         resultsList.add(index,points);
         textField.setEditable(false);
         textField.setStyle("-fx-background-color: lightgray;");
+        if (counter == 3){
+            threeCountStage.setTitle("Slå igen");
+            GridPane pane2 = new GridPane();
+            threeCountContent(pane2);
+            Scene scene = new Scene(pane2);
+            threeCountStage.setScene(scene);
+            threeCountStage.showAndWait();
+            counter=0;
+            for (int i = 0; i<textFieldList.size(); i++){
+                if (textFieldList.get(i).isEditable()){
+                    textFieldList.get(i).clear();
+                }
+                }
+        }
+
     }
 
     public void threeCountContent(GridPane pane){
@@ -242,5 +250,6 @@ public class YatzyGui extends Application {
         pane.add(button,0,1);
 
         button.setOnAction(event -> {threeCountStage.close(); numberOfRolls.setText("0");});
+        accumulatedScore=0;
     }
 }
