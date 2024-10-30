@@ -107,7 +107,7 @@ public class YatzyGui extends Application {
                     threeCountContent(pane2);
                     Scene scene = new Scene(pane2);
                     threeCountStage.setScene(scene);
-                    threeCountStage.show();
+                    threeCountStage.showAndWait();
 
 
 
