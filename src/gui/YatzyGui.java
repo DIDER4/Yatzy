@@ -116,14 +116,17 @@ public class YatzyGui extends Application {
         };
 
         for (int row = 0; row < labels.length; row++) {
+            int index = row;
             Label label = new Label(labels[row]);
             TextField textField = new TextField();
             tableLabelList.add(label);
             textFieldList.add(textField);
             scoreBoardTable.add(label, 0, row);
             scoreBoardTable.add(textField, 1, row);
+            textField.setOnMouseClicked(event -> textFieldAction(textFieldList.get(index),index));
         }
         pane.add(scoreBoardTable, 0, 1);
+
     }
 
     private Die[] throwRaffleCup() {
