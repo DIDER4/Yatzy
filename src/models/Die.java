@@ -14,6 +14,7 @@ public class Die {
         this.eyes = eyes;
     }
 
+    // Constructor for assignment
     public Die() {
         setEyes(0);
         setRandom(new Random());
@@ -33,5 +34,10 @@ public class Die {
 
     public void setRandom(Random random) {
         this.random = random;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%d",eyes);
     }
 }

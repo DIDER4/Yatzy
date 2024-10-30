@@ -5,7 +5,7 @@ public class RaffleCup {
 
     public RaffleCup() {
         for(int index = 0; index < dice.length; index++){
-            dice[index] = new Die();
+            this.dice[index] = new Die();
         }
     }
 

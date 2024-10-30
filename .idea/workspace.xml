@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bed1782-295b-4529-b5e0-ce21edd298f8" name="Changes" comment="roll() method">
+    <list default="true" id="7bed1782-295b-4529-b5e0-ce21edd298f8" name="Changes" comment="RaffleCup and Die Class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Die.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Die.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/RaffleCup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/RaffleCup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/YatzyResultCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/YatzyResultCalculator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +31,12 @@
     &quot;assignee&quot;: &quot;benn-christensen&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/DIDER4/Yatzy.git",
-    "accountId": "547ece8f-27eb-4fbe-8f7c-ef6a15caaec7"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DIDER4/Yatzy.git&quot;,
+    &quot;accountId&quot;: &quot;547ece8f-27eb-4fbe-8f7c-ef6a15caaec7&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -45,24 +46,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.YatzyResultsCalculatorTests.upperSectionScoreTests.executor": "Run",
-    "Repository.Attach.Annotations": "true",
-    "Repository.Attach.JavaDocs": "true",
-    "Repository.Attach.Sources": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.RaffleCup.executor&quot;: &quot;Run&quot;,
+    &quot;Application.YatzyApp.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.YatzyResultsCalculatorTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.YatzyResultsCalculatorTests.upperSectionScoreTests.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
+    <configuration name="RaffleCup" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="models.RaffleCup" />
+      <module name="Yatzy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="YatzyResultsCalculatorTests.upperSectionScoreTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Yatzy" />
       <extension name="coverage">
@@ -81,6 +92,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RaffleCup" />
         <item itemvalue="JUnit.YatzyResultsCalculatorTests.upperSectionScoreTests" />
       </list>
     </recent_temporary>
@@ -96,8 +108,20 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="roll() method" />
-    <option name="LAST_COMMIT_MESSAGE" value="roll() method" />
+    <MESSAGE value="RaffleCup and Die Class" />
+    <option name="LAST_COMMIT_MESSAGE" value="RaffleCup and Die Class" />
   </component>
 </project>

@@ -1,21 +1,19 @@
 package models;
-
 /**
  * Used to calculate the score of throws with 5 dice
  */
 public class YatzyResultCalculator {
-
-
+    // Data fields
     private Die[] dice;
     int[] dicesArray = new int[6];
 
+    // Constructor
     public YatzyResultCalculator(Die[] dice) {
         this.dice=dice;
-        for (int i = 0; i< dicesArray.length-1; i++){
+        for (int i = 0; i < dicesArray.length - 1; i++){
             dicesArray[dice[i].getEyes()-1]++;
 
         }
-        //TODO: implement YatzyResultCalculator constructor.
     }
 
     /**
@@ -23,14 +21,15 @@ public class YatzyResultCalculator {
      * @param eyes eye value to calculate score for. eyes should be between 1 and 6
      * @return the score for specified eye value
      */
+
     public int upperSectionScore(int eyes) {
-        return dicesArray[eyes-1]*eyes;
+        return dicesArray[eyes - 1] * eyes;
     }
 
     public int onePairScore() {
-        for (int i = 5; i <= dicesArray.length && i >=0; i--){
-            if (dicesArray[i]>=2){
-                return (i+1)*2;
+        for (int i = 5; i <= dicesArray.length && i >= 0; i--){
+            if (dicesArray[i] >= 2){
+                return (i + 1) * 2;
             }
         }
         return 0;
@@ -54,8 +53,6 @@ public class YatzyResultCalculator {
                 }
             }
         }
-
-
         return 0;
     }
 
@@ -143,5 +140,17 @@ public class YatzyResultCalculator {
             }
         }
         return 0;
+    }
+
+    public int upperSectionSum(){
+        int sum = 0;
+        for(int index = 0; index < diceFaceArray.length; index++){
+            sum += ((index + 1) * diceFaceArray[index]);
+        }
+        return sum;
+    }
+
+    private int sumOfPair(int diceFace, int pair){
+        return diceFace * pair;
     }
 }
