@@ -206,7 +206,12 @@ public class YatzyGui extends Application {
     }
 
     private int totalScore(){
-        return 0;
+
+        int sum = 0;
+        for(int index = 0; index < resultsList.size(); index++){
+            sum += resultsList.get(index);
+        }
+        return sum;
     }
 
     private String toString(int eyes) {
