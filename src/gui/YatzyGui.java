@@ -49,6 +49,7 @@ public class YatzyGui extends Application {
         Scene firstScene = new Scene(primaryPane);
         primaryStage.setScene(firstScene);
         primaryStage.show();
+
     }
     private void innerContents(GridPane pane) {
         // upper GUI elements
@@ -86,6 +87,7 @@ public class YatzyGui extends Application {
 
         });
 
+
         // lower GUI elements
         GridPane scoreBoardTable = new GridPane();
 
@@ -96,14 +98,18 @@ public class YatzyGui extends Application {
         };
 
         for(int row = 0; row < labels.length; row++){
+            int index = row;
             Label label = new Label(labels[row]);
             TextField textField = new TextField();
             tableLabelList.add(label);
             textFieldList.add(textField);
             scoreBoardTable.add(label, 0, row);
             scoreBoardTable.add(textField, 1, row);
+
+            textField.setOnMouseClicked(event -> textFieldAction(textFieldList.get(index),index));
         }
         pane.add(scoreBoardTable,0,1);
+
     }
 
     private Die[] throwRaffleCup(){
@@ -165,4 +171,14 @@ public class YatzyGui extends Application {
     private String toString(int eyes) {
         return Integer.toString(eyes);
     }
+
+    private void textFieldAction (TextField textField, int index){
+        int points = Integer.parseInt(textField.getText());
+        resultsList.add(index,points);
+        textField.setEditable(false);
+        textField.setStyle("-fx-background-color: lightgray;");
+    }
+
+
+
 }
