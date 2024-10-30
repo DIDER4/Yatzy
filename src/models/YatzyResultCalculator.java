@@ -1,18 +1,22 @@
 package models;
+
+import java.util.Arrays;
+
 /**
  * Used to calculate the score of throws with 5 dice
  */
 public class YatzyResultCalculator {
-    // Data fields
-    private Die[] dice;
-    int[] dicesArray = new int[6];
+    private final int[] diceFaceArray = new int[6];
+    private final Die[] dice;
 
-    // Constructor
+    /**
+     *
+     * @param dice
+     */
     public YatzyResultCalculator(Die[] dice) {
-        this.dice=dice;
-        for (int i = 0; i < dicesArray.length - 1; i++){
-            dicesArray[dice[i].getEyes()-1]++;
-
+        this.dice = dice;
+        for (Die die : dice) {
+            diceFaceArray[die.getEyes() - 1]++;
         }
     }
 
@@ -21,54 +25,54 @@ public class YatzyResultCalculator {
      * @param eyes eye value to calculate score for. eyes should be between 1 and 6
      * @return the score for specified eye value
      */
-
     public int upperSectionScore(int eyes) {
-        return dicesArray[eyes - 1] * eyes;
+        return diceFaceArray[eyes - 1] * eyes;
     }
 
     public int onePairScore() {
-        for (int i = 5; i <= dicesArray.length && i >= 0; i--){
-            if (dicesArray[i] >= 2){
-                return (i + 1) * 2;
+        int seekPair = 2; // The pair we seek
+        for(int diceIndex : diceFaceArray){ // Don't understand: Works with descending classic for-loop and casual for each
+            if(diceIndex >= seekPair){
+                int diceFace = diceIndex + 1;
+                return sumOfPair(diceFace, seekPair);
             }
         }
         return 0;
     }
 
     public int twoPairScore() {
+        int seekPair = 2; // The pair we seek
+        int pairCounter = 0;
         int sum = 0;
-        for (int i = 0; i < dicesArray.length; i++){
-            if (dicesArray[i]>=2){
-                sum=(i+1)*2;
-            }
-            if (sum>0) {
-                for (int j = 0; j < dicesArray.length && j >= 0; j++) {
-                    if (dicesArray[j] >= 2) {
-                        if ((j+1)*2<sum || (j+1)*2>sum){
-                            sum+=(j+1)*2;
-                            return sum;
-                        }
 
-                    }
-                }
+        for(int diceIndex = 0; diceIndex < diceFaceArray.length; diceIndex++){
+            if(diceFaceArray[diceIndex] >= seekPair){
+                int diceFace = diceIndex + 1;
+                sum += sumOfPair(diceFace, seekPair);
+                pairCounter++;
+            }
+            if(pairCounter == 2){
+                return sum;
             }
         }
         return 0;
     }
 
     public int threeOfAKindScore() {
-        for (int i = 5; i <= dicesArray.length && i >=0; i--){
-            if (dicesArray[i]>=3){
-                return (i+1)*3;
+        int seekPair = 3; // The pair we seek
+        for(int diceEyes = 0; diceEyes < diceFaceArray.length; diceEyes++){
+            if(diceFaceArray[diceEyes] >= seekPair){
+                return (diceEyes + 1) * seekPair;
             }
         }
         return 0;
     }
 
     public int fourOfAKindScore() {
-        for (int i = 5; i <= dicesArray.length && i >=0; i--){
-            if (dicesArray[i]>=4){
-                return (i+1)*4;
+        int seekPair = 4; // The pair we seek
+        for(int diceEyes = 0; diceEyes < diceFaceArray.length; diceEyes++){
+            if(diceFaceArray[diceEyes] >= seekPair){
+                return (diceEyes + 1) * seekPair;
             }
         }
         return 0;
@@ -76,49 +80,47 @@ public class YatzyResultCalculator {
 
     public int smallStraightScore() {
         int sum = 0;
-        for (int i = 0; i < dicesArray.length-1; i++){
-            if (dicesArray[i]==1){
+        int length = diceFaceArray.length - 1;
+        for(int index = 0; index < length; index++){
+            if(diceFaceArray[index] == 1){
                 sum++;
             }
         }
-        if (sum==5){
+        if(sum == 5){
             return 15;
         }
-        else {
-            return 0;
-        }
+        return 0;
     }
 
     public int largeStraightScore() {
         int sum = 0;
-        for (int i = 1; i < dicesArray.length; i++){
-            if (dicesArray[i]==1){
+        int length = diceFaceArray.length;
+        for(int index = 1; index < length; index++){
+            if(diceFaceArray[index] == 1){
                 sum++;
             }
         }
-        if (sum==5){
+        if(sum == 5){
             return 20;
         }
-        else {
-            return 0;
-        }
+        return 0;
     }
 
     public int fullHouseScore() {
+        int seekPairTwo = 2; // The pair we seek
+        int seekPairThree = 3;
+        int pairCounter = 0;
         int sum = 0;
-        for (int i = 0; i < dicesArray.length; i++){
-            if (dicesArray[i]==2){
-                sum=(i+1)*2;
+
+        for(int diceIndex = 0; diceIndex < diceFaceArray.length; diceIndex++){
+            int diceRolled = diceFaceArray[diceIndex];
+            if(diceRolled == seekPairTwo || diceRolled == seekPairThree){
+                int diceFace = diceIndex + 1;
+                sum += sumOfPair(diceFace, diceRolled);
+                pairCounter++;
             }
-            if (sum>0) {
-                for (int j = 0; j < dicesArray.length && j >= 0; j++) {
-                    if (dicesArray[j] == 3) {
-                        sum+=(j+1)*3;
-                        return sum;
-
-
-                    }
-                }
+            if(pairCounter == 2){
+                return sum;
             }
         }
         return 0;
@@ -126,16 +128,18 @@ public class YatzyResultCalculator {
 
     public int chanceScore() {
         int sum = 0;
-        for (int i = 0; i < dicesArray.length; i++){
-            sum+=dicesArray[i]*(i+1);
+        for(int index = 0; index < diceFaceArray.length; index++){
+            int diceEye = diceFaceArray[index];
+            int numberOfDice = index + 1;
+            sum += (diceEye * numberOfDice);
         }
-
         return sum;
     }
 
     public int yatzyScore() {
-        for (int i = 5; i <= dicesArray.length && i >=0; i--){
-            if (dicesArray[i]>=5){
+        int seekPair = 5; // The pair we seek
+        for(int diceIndex : diceFaceArray){ // Don't understand: Works with descending classic for-loop and casual for each
+            if(diceIndex >= seekPair){
                 return 50;
             }
         }
@@ -144,8 +148,8 @@ public class YatzyResultCalculator {
 
     public int upperSectionSum(){
         int sum = 0;
-        for(int index = 0; index < dicesArray.length; index++){
-            sum += ((index + 1) * dicesArray[index]);
+        for(int index = 0; index < diceFaceArray.length; index++){
+            sum += ((index + 1) * diceFaceArray[index]);
         }
         return sum;
     }
