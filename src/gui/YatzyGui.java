@@ -43,6 +43,8 @@ public class YatzyGui extends Application {
 
     private final ArrayList<Integer> resultsList = new ArrayList<>();
 
+    private final Stage threeCountStage = new Stage();
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Yatzy");
@@ -100,6 +102,16 @@ public class YatzyGui extends Application {
                 updateNumberOfRolls();
                 checkPotentialPoints(raffleCup);
                 if (counter == 3){
+                    threeCountStage.setTitle("Slå igen");
+                    GridPane pane2 = new GridPane();
+                    threeCountContent(pane2);
+                    Scene scene = new Scene(pane2);
+                    threeCountStage.setScene(scene);
+                    threeCountStage.show();
+
+
+
+
                     counter=0;
                 }
             }
@@ -210,5 +222,20 @@ public class YatzyGui extends Application {
         resultsList.add(index,points);
         textField.setEditable(false);
         textField.setStyle("-fx-background-color: lightgray;");
+    }
+
+    public void threeCountContent(GridPane pane){
+        pane.setGridLinesVisible(false);
+        pane.setPadding(new Insets(20));
+        pane.setHgap(20);
+        pane.setVgap(10);
+
+        Label label = new Label("!!3 Slag slået!!");
+        pane.add(label,0,0);
+
+        Button button = new Button("Slå igen");
+        pane.add(button,0,1);
+
+        button.setOnAction(event -> {threeCountStage.close(); numberOfRolls.setText("0");});
     }
 }
