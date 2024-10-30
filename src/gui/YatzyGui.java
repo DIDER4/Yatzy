@@ -99,6 +99,9 @@ public class YatzyGui extends Application {
                 addDiceToLabel(raffleCup);
                 updateNumberOfRolls();
                 checkPotentialPoints(raffleCup);
+                if (counter == 3){
+                    counter=0;
+                }
             }
 
         });
