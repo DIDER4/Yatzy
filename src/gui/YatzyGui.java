@@ -1,14 +1,17 @@
 package gui;
 
+import javafx.geometry.HPos;
 import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import models.RaffleCup;
 import models.Die;
 import models.YatzyResultCalculator;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.geometry.Insets;
+import javafx.scene.paint.Color;
+import javafx.geometry.Orientation;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -46,31 +49,40 @@ public class YatzyGui extends Application {
         primaryStage.setTitle("Yatzy");
         GridPane primaryPane = new GridPane();
         this.innerContents(primaryPane);
-        Scene firstScene = new Scene(primaryPane);
+        Scene firstScene = new Scene(primaryPane,400,800);
         primaryStage.setScene(firstScene);
         primaryStage.show();
+        primaryPane.setPadding(new Insets(10));
+        primaryPane.setHgap(10);
+        primaryPane.setVgap(10);
     }
     private void innerContents(GridPane pane) {
         // upper GUI elements
         GridPane diceBox = new GridPane();
+        diceBox.setPadding(new Insets(10));
+        diceBox.setHgap(10);
+        diceBox.setVgap(10);
         for (int row = 0; row < 3; row++) {
             for (int columnn = 0; columnn < 5; columnn++) {
                 if (row == 0) {
-                    Label diceFaceLabel = new Label();
+                    Label diceFaceLabel = new Label("0");
                     diceFaceLabelList.add(diceFaceLabel);
+                    diceFaceLabel.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(10), BorderWidths.DEFAULT)));
+                    diceFaceLabel.setPadding(new Insets(15));
                     diceBox.add(diceFaceLabel, columnn, row);
-                } else if (row == 1){
+                    GridPane.setHalignment(diceFaceLabel, HPos.CENTER);
+                } else if (row == 1) {
                     RadioButton radioButton = new RadioButton("Hold");
                     radioButtonList.add(radioButton);
                     diceBox.add(radioButton, columnn, row);
                     // radioButton.setOnAction(e -> ); Need to make a method for holding a dice from changing
                 }
             }
-
             if(row == 2) {
                 Label numberOfRollsLabel = new Label("Number of throws:");
                 HBox hbox = new HBox(numberOfRollsLabel, numberOfRolls, rollDiceButton);
-                diceBox.add(hbox, 0,2);
+                hbox.setSpacing(10);
+                diceBox.add(hbox, 0, 2, 5, 1);
             }
         }
         pane.add(diceBox, 0, 0);
@@ -88,6 +100,9 @@ public class YatzyGui extends Application {
 
         // lower GUI elements
         GridPane scoreBoardTable = new GridPane();
+        scoreBoardTable.setPadding(new Insets(10));
+        scoreBoardTable.setVgap(10);
+        scoreBoardTable.setHgap(10);
 
         String[] labels = {
                 "1'ere", "2'ere", "3'ere", "4'ere", "5'ere", "6'ere", "Sum", "Bonus",
@@ -153,7 +168,7 @@ public class YatzyGui extends Application {
 
     private int bonusScore(){
         // iterate thorugh first label index 0-5
-        // if average of each diceface is 3
+        // if sum of each diceface is 63
         // return 50 points
         return 0;
     }
